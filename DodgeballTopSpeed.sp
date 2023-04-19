@@ -7,11 +7,11 @@
 #pragma newdecls required
 
 public Plugin myinfo = {
-    name = "Dodgeball Top Speed",
-    author = "Zonas & Elite",
-    description = "Top Speed Command and Menu for Dodgeball",
-    version = "Version",
-    url = "URL"
+	name = "Dodgeball Top Speed",
+	author = "Zonas & Elite",
+	description = "Top Speed Command and Menu for Dodgeball",
+	version = "Version",
+	url = "URL"
 };
 
 Database g_Database;
@@ -21,13 +21,13 @@ Database g_Database;
  */
 
 public void OnPluginStart() {
-    Database.Connect(HandleConnectionResult, "db_stats");
+	Database.Connect(HandleConnectionResult, "db_stats");
 
-    // RegConsoleCmd("sm_topspeed", topspeed, "Show topspeed");
+	// RegConsoleCmd("sm_topspeed", topspeed, "Show topspeed");
 }
 
 public void OnPluginEnd() {
-    delete g_Database;
+	delete g_Database;
 }
 
 /**
@@ -69,16 +69,16 @@ void FindAndInitializeRecords(int client, char auth[32]) {
 	g_Database.Query(ValidateClientRecords, query, client, DBPrio_Normal);
 }
 
+void AddClientToGameState(int client, char auth[32])  {
+	char table_name[11] = "game_stats";
+	CreateRecord(client, auth, table_name);
+}
+
 /**
  * Game (Map) state functions
  */
 public void OnMapEnd() {
 	DumpGameState();
-}
-
-void AddClientToGameState(int client, char auth[32])  {
-	char table_name[11] = "game_stats";
-	CreateRecord(client, auth, table_name);
 }
 
 /**
@@ -100,44 +100,44 @@ void AddClientToGameState(int client, char auth[32])  {
  */
 
 void HandleConnectionResult(Database db, const char[] error, any data) {
-    LogError("%s", error);
-    g_Database = db;
-    ValidateDodgeballStatsTable();
-    InitializeGameStatsTable();
+	LogError("%s", error);
+	g_Database = db;
+	ValidateDodgeballStatsTable();
+	InitializeGameStatsTable();
 
 }
 
 void ValidateDodgeballStatsTable() {
-    char CreateTable[] = "CREATE TABLE IF NOT EXISTS `dodgeball_stats`                      \
-    (					                                                                    \
+	char CreateTable[] = "CREATE TABLE IF NOT EXISTS `dodgeball_stats`						\
+	(																						\
 		`id` int(32) NOT NULL AUTO_INCREMENT PRIMARY KEY,									\
 		`steam_id` varchar(32) NOT NULL,													\
 		`username` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,	\
 		`top_speed` int(32) NOT NULL DEFAULT '0',											\
-        `deflections` int(32) NOT NULL DEFAULT '0',                                         \
-		UNIQUE KEY `steam_id` (`steam_id`)                                                  \
-    );";
+		`deflections` int(32) NOT NULL DEFAULT '0',											\
+		UNIQUE KEY `steam_id` (`steam_id`)													\
+	);";
 
-    char query[599];
-    Format(query, sizeof(query), CreateTable);
-    
-    ValidateTablePresence("dodgeball_stats", query);
+	char query[599];
+	Format(query, sizeof(query), CreateTable);
+
+	ValidateTablePresence("dodgeball_stats", query);
 }
 
 void InitializeGameStatsTable() {
 	char CreateTable[] = "CREATE TABLE IF NOT EXISTS `game_stats`							\
-    (																						\
+	(																						\
 		`id` int(32) NOT NULL AUTO_INCREMENT PRIMARY KEY,									\
 		`steam_id` varchar(32) NOT NULL,													\
 		`username` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,	\
 		`top_speed` int(32) NOT NULL DEFAULT '0',											\
-        `deflections` int(32) NOT NULL DEFAULT '0',											\
+		`deflections` int(32) NOT NULL DEFAULT '0',											\
 		UNIQUE KEY `steam_id` (`steam_id`)													\
-    );";
+	);";
 
 	char query[599];
 	Format(query, sizeof(query), CreateTable);
-    
+
 	ValidateTablePresence("game_stats", query);
 }
 
@@ -185,14 +185,14 @@ void DumpGameState() {
 
 void HandleRecordInsert(Database db, DBResultSet results, const char[] error, any data) {
 	if(db == null || results == null) {
-        LogError("Error inserting player into database: %s", error);
-        return;
+		LogError("Error inserting player into database: %s", error);
+		return;
     }
 }
 
 void HandleGameStatsDump(Database db, DBResultSet results, const char[] error, any data) {
 	if(db == null || results != null) {
-        LogError("Error dumping game_stats table: %s", error);
-        return;
-    }
+		LogError("Error dumping game_stats table: %s", error);
+		return;
+	}
 }
