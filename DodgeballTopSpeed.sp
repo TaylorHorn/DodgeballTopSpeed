@@ -108,34 +108,34 @@ void HandleConnectionResult(Database db, const char[] error, any data) {
 }
 
 void ValidateDodgeballStatsTable() {
-	char CreateTable[] = "CREATE TABLE IF NOT EXISTS `dodgeball_stats`						\
-	(																						\
-		`id` int(32) NOT NULL AUTO_INCREMENT PRIMARY KEY,									\
-		`steam_id` varchar(32) NOT NULL,													\
-		`username` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,	\
-		`top_speed` int(32) NOT NULL DEFAULT '0',											\
-		`deflections` int(32) NOT NULL DEFAULT '0',											\
-		UNIQUE KEY `steam_id` (`steam_id`)													\
+	char CreateTable[120] = "CREATE TABLE IF NOT EXISTS `dodgeball_stats`\
+	(\
+		`id` int(32) NOT NULL AUTO_INCREMENT PRIMARY KEY,\
+		`steam_id` varchar(32) NOT NULL,\
+		`username` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\
+		`top_speed` int(32) NOT NULL DEFAULT '0',\
+		`deflections` int(32) NOT NULL DEFAULT '0',\
+		UNIQUE KEY `steam_id` (`steam_id`)\
 	);";
 
-	char query[599];
+	char query[120];
 	Format(query, sizeof(query), CreateTable);
 
 	ValidateTablePresence("dodgeball_stats", query);
 }
 
 void InitializeGameStatsTable() {
-	char CreateTable[] = "CREATE TABLE IF NOT EXISTS `game_stats`							\
-	(																						\
-		`id` int(32) NOT NULL AUTO_INCREMENT PRIMARY KEY,									\
-		`steam_id` varchar(32) NOT NULL,													\
-		`username` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,	\
-		`top_speed` int(32) NOT NULL DEFAULT '0',											\
-		`deflections` int(32) NOT NULL DEFAULT '0',											\
-		UNIQUE KEY `steam_id` (`steam_id`)													\
+	char CreateTable[120] = "CREATE TABLE IF NOT EXISTS `game_stats`\
+	(\
+		`id` int(32) NOT NULL AUTO_INCREMENT PRIMARY KEY,\
+		`steam_id` varchar(32) NOT NULL,\
+		`username` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,\
+		`top_speed` int(32) NOT NULL DEFAULT '0',\
+		`deflections` int(32) NOT NULL DEFAULT '0',\
+		UNIQUE KEY `steam_id` (`steam_id`)\
 	);";
 
-	char query[599];
+	char query[120];
 	Format(query, sizeof(query), CreateTable);
 
 	ValidateTablePresence("game_stats", query);
